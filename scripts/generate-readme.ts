@@ -12,7 +12,7 @@ const PARSERS = {
     language: "Zig",
     description:
       "A high-performance & spec-compliant JavaScript/TypeScript compiler written in Zig.",
-    url: "https://github.com/arshad-yaseen/yuku",
+    url: "https://github.com/yuku-toolchain/yuku",
   },
   oxc: {
     name: "Oxc",

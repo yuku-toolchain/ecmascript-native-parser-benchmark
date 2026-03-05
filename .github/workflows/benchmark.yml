@@ -46,7 +46,7 @@ jobs:
         run: |
           cd zig
           zig fetch --save git+https://github.com/srijan-paul/jam/#HEAD
-          zig fetch --save git+https://github.com/arshad-yaseen/yuku/#HEAD
+          zig fetch --save git+https://github.com/yuku-toolchain/yuku/#HEAD
 
       - name: Update Rust dependencies
         run: |

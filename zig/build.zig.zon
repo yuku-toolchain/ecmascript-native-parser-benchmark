@@ -4,13 +4,13 @@
     .minimum_zig_version = "0.16.0-dev.2368+380ea6fb5",
     .fingerprint = 0xa1bd1b16d2a0c0b3,
     .dependencies = .{
-        .yuku = .{
-            .url = "git+https://github.com/arshad-yaseen/yuku/?ref=HEAD#d0598d06a29ea6c7d8e6f7e28021c2191ed94d21",
-            .hash = "yuku-0.0.0-m6ranpQeCABCWRoR0LdDGQTNVrjoyGu6t_SW502oep-B",
-        },
         .jam = .{
             .url = "git+https://github.com/srijan-paul/jam/?ref=HEAD#ac5d600eaae30a883f0e87d46493d48db9e501a8",
             .hash = "jam-0.0.0-1QhPrjuTCQAv-vovo-LHd34sPOl96Tn7rHG0UzvKF9bG",
+        },
+        .yuku = .{
+            .url = "git+https://github.com/yuku-toolchain/yuku.git#2383d82dae7b142bb00dd718b1127b5128ac2da2",
+            .hash = "yuku-0.0.0-m6ranhVGCAARWUatV9RxT8HcEQG-zkPBf82wiuQDZJ8f",
         },
     },
     .paths = .{

@@ -5,7 +5,7 @@ use oxc_span::SourceType;
 pub fn parse_with_oxc(source: &str) {
     let source_type = SourceType::from_path("bench.js").unwrap();
     let allocator = Allocator::default();
-    Parser::new(&allocator, source, source_type).parse();
+    let _ = Parser::new(&allocator, source, source_type).parse();
 }
 
 pub fn parse_with_swc(source: &str) {
