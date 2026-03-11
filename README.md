@@ -7,7 +7,7 @@ Benchmark ECMAScript parsers implemented in native languages.
 | Property | Value |
 |----------|-------|
 | OS | Linux 6.14.0-1017-azure (x64) |
-| CPU | AMD EPYC 9V74 80-Core Processor |
+| CPU | AMD EPYC 7763 64-Core Processor |
 | Cores | 4 |
 | Memory | 16 GB |
 
@@ -49,10 +49,10 @@ The TypeScript compiler source code bundled into a single file.
 
 | Parser | Mean | Min | Max | Peak Memory (RSS) |
 |--------|------|-----|-----|----|
-| Yuku | 78.32 ms | 77.83 ms | 79.39 ms | 39.8 MB |
-| Oxc | 83.39 ms | 82.96 ms | 84.43 ms | 52.9 MB |
-| SWC | 181.45 ms | 180.78 ms | 182.36 ms | 89.7 MB |
-| Jam | 212.89 ms | 211.48 ms | 214.35 ms | 186.1 MB |
+| Yuku | 76.08 ms | 75.50 ms | 77.31 ms | 39.8 MB |
+| Oxc | 76.24 ms | 74.62 ms | 84.59 ms | 52.9 MB |
+| SWC | 163.42 ms | 162.59 ms | 164.88 ms | 89.7 MB |
+| Jam | 197.27 ms | 195.79 ms | 200.83 ms | 186.1 MB |
 
 ### [Three.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/three.js)
 
@@ -64,10 +64,10 @@ A popular 3D graphics library for the web.
 
 | Parser | Mean | Min | Max | Peak Memory (RSS) |
 |--------|------|-----|-----|----|
-| Oxc | 18.25 ms | 17.99 ms | 19.28 ms | 13.4 MB |
-| Yuku | 18.72 ms | 18.48 ms | 19.68 ms | 10.3 MB |
-| SWC | 36.64 ms | 36.19 ms | 38.15 ms | 22.5 MB |
-| Jam | 45.93 ms | 45.51 ms | 47.74 ms | 39.5 MB |
+| Oxc | 16.46 ms | 16.14 ms | 17.03 ms | 13.4 MB |
+| Yuku | 17.99 ms | 17.74 ms | 18.83 ms | 10.3 MB |
+| SWC | 33.37 ms | 32.49 ms | 35.09 ms | 22.4 MB |
+| Jam | 42.80 ms | 42.12 ms | 44.54 ms | 39.5 MB |
 
 ### [Ant Design](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/antd.js)
 
@@ -79,9 +79,9 @@ A popular React UI component library with enterprise-class design.
 
 | Parser | Mean | Min | Max | Peak Memory (RSS) |
 |--------|------|-----|-----|----|
-| Yuku | 60.14 ms | 59.57 ms | 61.54 ms | 30.5 MB |
-| Oxc | 66.23 ms | 65.85 ms | 67.15 ms | 41.0 MB |
-| SWC | 137.90 ms | 136.94 ms | 138.71 ms | 67.3 MB |
+| Yuku | 58.74 ms | 58.14 ms | 64.09 ms | 30.5 MB |
+| Oxc | 60.85 ms | 60.09 ms | 61.68 ms | 41.0 MB |
+| SWC | 126.58 ms | 124.61 ms | 130.48 ms | 67.3 MB |
 | Jam | Failed to parse | - | - | - |
 
 ## Run Benchmarks
