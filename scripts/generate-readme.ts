@@ -138,8 +138,8 @@ async function generatePerformanceChart(fileKey: FileKey): Promise<string> {
 	parserData.sort((a, b) => a.mean - b.mean);
 
 	const barCount = parserData.length;
-	const chartWidth = 600;
-	const chartHeight = barCount * 28 + 36;
+	const chartWidth = 500;
+	const chartHeight = barCount * 24 + 28;
 
 	const labels = parserData.map((p) => p.name);
 	const meanData = parserData.map((p) => p.mean);
@@ -167,9 +167,9 @@ async function generatePerformanceChart(fileKey: FileKey): Promise<string> {
 					data: meanData,
 					backgroundColor: colors,
 					borderWidth: 0,
-					borderRadius: 3 * dpr,
-					barPercentage: 0.7,
-					categoryPercentage: 0.9,
+					borderRadius: 0,
+					barPercentage: 0.75,
+					categoryPercentage: 0.92,
 				},
 			],
 		},
@@ -179,7 +179,7 @@ async function generatePerformanceChart(fileKey: FileKey): Promise<string> {
 			devicePixelRatio: 1,
 			layout: {
 				padding: {
-					right: 80 * dpr,
+					right: 65 * dpr,
 					top: 2 * dpr,
 					bottom: 0,
 				},
@@ -190,32 +190,20 @@ async function generatePerformanceChart(fileKey: FileKey): Promise<string> {
 			},
 			scales: {
 				x: {
+					display: false,
 					beginAtZero: true,
 					max: chartMax,
-					grid: {
-						color: "#d0d0d0",
-						lineWidth: 1,
-					},
-					border: {
-						display: false,
-					},
-					ticks: {
-						stepSize: step,
-						color: "#8b8b8b",
-						font: { size: 11 * dpr },
-						callback: (value) => value + "ms",
-					},
 				},
 				y: {
 					grid: { display: false },
 					border: { display: false },
 					ticks: {
-						color: "#555",
+						color: "#CAC1B0",
 						font: {
-							size: 12 * dpr,
-							weight: "bold",
+							size: 9 * dpr,
+							weight: "500",
 						},
-						padding: 4 * dpr,
+						padding: 3 * dpr,
 					},
 				},
 			},
@@ -231,8 +219,8 @@ async function generatePerformanceChart(fileKey: FileKey): Promise<string> {
 						const bar = meta.data[i];
 						const value = dataset.data[i] as number;
 						ctx.save();
-						ctx.fillStyle = "#888";
-						ctx.font = `${11 * dpr}px sans-serif`;
+						ctx.fillStyle = "#CAC1B0";
+						ctx.font = `${9 * dpr}px sans-serif`;
 						ctx.textAlign = "left";
 						ctx.textBaseline = "middle";
 						ctx.fillText(

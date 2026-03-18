@@ -1,26 +1,27 @@
 {
-  "name": "ecmascript-native-parser-benchmark",
-  "type": "module",
-  "private": true,
-  "scripts": {
-    "bench": "bun scripts/load-files.ts && bun run build && bun bench:typescript && bun bench:three && bun bench:antd && bun readme",
-    "build": "bun build:zig && bun build:rust",
-    "build:zig": "cd zig && zig build --release=fast && cp ./zig-out/bin/yuku_typescript ./zig-out/bin/yuku_three ./zig-out/bin/yuku_antd ./zig-out/bin/jam_typescript ./zig-out/bin/jam_three ./zig-out/bin/jam_antd ../bin",
-    "build:rust": "cd rust && cargo build --release && cp ./target/release/oxc_typescript ./target/release/oxc_three ./target/release/oxc_antd ./target/release/swc_typescript ./target/release/swc_three ./target/release/swc_antd ../bin",
-    "bench:typescript": "hyperfine --warmup 100 './bin/yuku_typescript' './bin/oxc_typescript' './bin/swc_typescript' './bin/jam_typescript' --export-json result/typescript.json",
-    "bench:three": "hyperfine --warmup 100 './bin/yuku_three' './bin/oxc_three' './bin/swc_three' './bin/jam_three' --export-json result/three.json",
-    "bench:antd": "hyperfine --warmup 100 './bin/yuku_antd' './bin/oxc_antd' './bin/swc_antd' --export-json result/antd.json",
-    "readme": "bun scripts/generate-readme.ts"
-  },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "@types/node": "^25.0.10"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "chart.js": "^4.5.1",
-    "chartjs-node-canvas": "^5.0.0"
-  }
+	"name": "ecmascript-native-parser-benchmark",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"bench": "bun update-parsers && bun scripts/load-files.ts && bun run build && bun bench:typescript && bun bench:three && bun bench:antd && bun readme",
+		"build": "bun build:zig && bun build:rust",
+		"build:zig": "cd zig && zig build --release=fast && cp ./zig-out/bin/yuku_typescript ./zig-out/bin/yuku_three ./zig-out/bin/yuku_antd ./zig-out/bin/jam_typescript ./zig-out/bin/jam_three ./zig-out/bin/jam_antd ../bin",
+		"build:rust": "cd rust && cargo build --release && cp ./target/release/oxc_typescript ./target/release/oxc_three ./target/release/oxc_antd ./target/release/swc_typescript ./target/release/swc_three ./target/release/swc_antd ../bin",
+		"bench:typescript": "hyperfine --warmup 100 './bin/yuku_typescript' './bin/oxc_typescript' './bin/swc_typescript' './bin/jam_typescript' --export-json result/typescript.json",
+		"bench:three": "hyperfine --warmup 100 './bin/yuku_three' './bin/oxc_three' './bin/swc_three' './bin/jam_three' --export-json result/three.json",
+		"bench:antd": "hyperfine --warmup 100 './bin/yuku_antd' './bin/oxc_antd' './bin/swc_antd' --export-json result/antd.json",
+		"readme": "bun scripts/generate-readme.ts",
+		"update-parsers": "cd zig && zig fetch --save git+https://github.com/srijan-paul/jam/#HEAD && zig fetch --save git+https://github.com/yuku-toolchain/yuku/#HEAD && cd ../rust && cargo update"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"@types/node": "^25.0.10"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"chart.js": "^4.5.1",
+		"chartjs-node-canvas": "^5.0.0"
+	}
 }
