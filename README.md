@@ -47,12 +47,12 @@ The TypeScript compiler source code bundled into a single file.
 
 ![TypeScript Performance](charts/typescript.png)
 
-| Parser | Mean | Min | Max | Peak Memory (RSS) |
-|--------|------|-----|-----|----|
-| Yuku | 28.15 ms | 27.58 ms | 29.00 ms | - |
-| Oxc | 29.38 ms | 26.88 ms | 46.18 ms | - |
-| Jam | 53.62 ms | 52.96 ms | 55.26 ms | - |
-| SWC | 55.58 ms | 53.85 ms | 57.56 ms | - |
+| Parser | Mean | Min | Max |
+|--------|------|-----|-----|
+| Yuku | 28.15 ms | 27.58 ms | 29.00 ms |
+| Oxc | 29.38 ms | 26.88 ms | 46.18 ms |
+| Jam | 53.62 ms | 52.96 ms | 55.26 ms |
+| SWC | 55.58 ms | 53.85 ms | 57.56 ms |
 
 ### [Three.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/three.js)
 
@@ -62,12 +62,12 @@ A popular 3D graphics library for the web.
 
 ![Three.js Performance](charts/three.png)
 
-| Parser | Mean | Min | Max | Peak Memory (RSS) |
-|--------|------|-----|-----|----|
-| Oxc | 7.50 ms | 7.07 ms | 20.51 ms | - |
-| Yuku | 7.90 ms | 7.53 ms | 8.28 ms | - |
-| SWC | 13.43 ms | 12.41 ms | 19.11 ms | - |
-| Jam | 13.69 ms | 12.99 ms | 14.26 ms | - |
+| Parser | Mean | Min | Max |
+|--------|------|-----|-----|
+| Oxc | 7.50 ms | 7.07 ms | 20.51 ms |
+| Yuku | 7.90 ms | 7.53 ms | 8.28 ms |
+| SWC | 13.43 ms | 12.41 ms | 19.11 ms |
+| Jam | 13.69 ms | 12.99 ms | 14.26 ms |
 
 ### [Ant Design](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/antd.js)
 
@@ -77,12 +77,12 @@ A popular React UI component library with enterprise-class design.
 
 ![Ant Design Performance](charts/antd.png)
 
-| Parser | Mean | Min | Max | Peak Memory (RSS) |
-|--------|------|-----|-----|----|
-| Yuku | 23.44 ms | 22.83 ms | 31.79 ms | - |
-| Oxc | 23.82 ms | 23.02 ms | 34.26 ms | - |
-| SWC | 44.49 ms | 43.49 ms | 47.47 ms | - |
-| Jam | Failed to parse | - | - | - |
+| Parser | Mean | Min | Max |
+|--------|------|-----|-----|
+| Yuku | 23.44 ms | 22.83 ms | 31.79 ms |
+| Oxc | 23.82 ms | 23.02 ms | 34.26 ms |
+| SWC | 44.49 ms | 43.49 ms | 47.47 ms |
+| Jam | Failed to parse | - | - |
 
 ## Run Benchmarks
 

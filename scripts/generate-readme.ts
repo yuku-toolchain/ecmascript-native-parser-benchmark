@@ -309,18 +309,37 @@ async function generateBenchmarkTable(fileKey: FileKey): Promise<string> {
 		return 0;
 	});
 
-	lines.push("| Parser | Mean | Min | Max | Peak Memory (RSS) |");
-	lines.push("|--------|------|-----|-----|----|");
+	const hasMemoryData = parserEntries.some(
+		({ result }) => result && getPeakMemory(result) !== null,
+	);
+
+	if (hasMemoryData) {
+		lines.push("| Parser | Mean | Min | Max | Peak Memory (RSS) |");
+		lines.push("|--------|------|-----|-----|----|");
+	} else {
+		lines.push("| Parser | Mean | Min | Max |");
+		lines.push("|--------|------|-----|-----|");
+	}
 
 	for (const { parser, result } of parserEntries) {
 		if (result) {
-			const memory = getPeakMemory(result);
-			const memoryStr = memory ? formatMemory(memory) : "-";
-			lines.push(
-				`| ${parser.name} | ${formatTime(result.mean)} | ${formatTime(result.min)} | ${formatTime(result.max)} | ${memoryStr} |`,
-			);
+			if (hasMemoryData) {
+				const memory = getPeakMemory(result);
+				const memoryStr = memory ? formatMemory(memory) : "-";
+				lines.push(
+					`| ${parser.name} | ${formatTime(result.mean)} | ${formatTime(result.min)} | ${formatTime(result.max)} | ${memoryStr} |`,
+				);
+			} else {
+				lines.push(
+					`| ${parser.name} | ${formatTime(result.mean)} | ${formatTime(result.min)} | ${formatTime(result.max)} |`,
+				);
+			}
 		} else {
-			lines.push(`| ${parser.name} | Failed to parse | - | - | - |`);
+			if (hasMemoryData) {
+				lines.push(`| ${parser.name} | Failed to parse | - | - | - |`);
+			} else {
+				lines.push(`| ${parser.name} | Failed to parse | - | - |`);
+			}
 		}
 	}
 
