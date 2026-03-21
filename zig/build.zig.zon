@@ -5,12 +5,12 @@
     .fingerprint = 0xa1bd1b16d2a0c0b3,
     .dependencies = .{
         .jam = .{
-            .url = "git+https://github.com/srijan-paul/jam/?ref=HEAD#ac5d600eaae30a883f0e87d46493d48db9e501a8",
-            .hash = "jam-0.0.0-1QhPrjuTCQAv-vovo-LHd34sPOl96Tn7rHG0UzvKF9bG",
+            .url = "git+https://github.com/srijan-paul/jam/?ref=HEAD#f4edda4eb27f37aaeae4f3f9b29e7ab532b7665d",
+            .hash = "jam-0.0.0-1QhPrgOUCQAHsL-kEUc6-LbRRWBfkyrxriEEp8viHV3W",
         },
         .yuku = .{
-            .url = "git+https://github.com/yuku-toolchain/yuku/?ref=HEAD#1db534a3b2fb160caed7dcf4b2b6990772794d3a",
-            .hash = "yuku-0.0.0-m6ranpKoCAA7ijEpEmU-x2uezLM4qMogNbv6x2Dof8_N",
+            .url = "git+https://github.com/yuku-toolchain/yuku/?ref=HEAD#8838501812960daac7ea3979ddbc2310173aa6a4",
+            .hash = "yuku-0.0.0-m6rangSmCAA6fstaTU1TFzXWD25MzSpYac3cnMZH74RT",
         },
     },
     .paths = .{
