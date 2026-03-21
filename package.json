@@ -3,7 +3,7 @@
 	"type": "module",
 	"private": true,
 	"scripts": {
-		"bench": "bun update-parsers && bun scripts/load-files.ts && bun run build && bun bench:typescript && bun bench:three && bun bench:antd && bun readme",
+		"bench": "bun scripts/load-files.ts && bun run build && bun bench:typescript && bun bench:three && bun bench:antd && bun readme",
 		"build": "bun build:zig && bun build:rust",
 		"build:zig": "cd zig && zig build --release=fast && cp ./zig-out/bin/yuku_typescript ./zig-out/bin/yuku_three ./zig-out/bin/yuku_antd ./zig-out/bin/jam_typescript ./zig-out/bin/jam_three ./zig-out/bin/jam_antd ../bin",
 		"build:rust": "cd rust && cargo build --release && cp ./target/release/oxc_typescript ./target/release/oxc_three ./target/release/oxc_antd ./target/release/swc_typescript ./target/release/swc_three ./target/release/swc_antd ../bin",
