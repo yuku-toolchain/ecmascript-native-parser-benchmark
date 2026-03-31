@@ -7,9 +7,9 @@ Benchmark ECMAScript parsers implemented in native languages.
 | Property | Value |
 |----------|-------|
 | OS | macOS 24.6.0 (arm64) |
-| CPU | Apple M3 |
-| Cores | 8 |
-| Memory | 16 GB |
+| CPU | Apple M4 Pro (Virtual) |
+| Cores | 6 |
+| Memory | 14 GB |
 
 ## Parsers
 
@@ -47,14 +47,14 @@ The TypeScript compiler source code bundled into a single file.
 
 ![TypeScript Performance](charts/typescript.png)
 
-| Parser | Mean | Min | Max |
-|--------|------|-----|-----|
-| Oxc | 28.68 ms | 28.15 ms | 29.35 ms |
-| Oxc + Semantic | 65.28 ms | 64.39 ms | 66.80 ms |
-| Yuku | 30.15 ms | 29.51 ms | 33.42 ms |
-| Yuku + Semantic | 48.82 ms | 48.23 ms | 49.58 ms |
-| Jam | 54.62 ms | 53.64 ms | 57.12 ms |
-| SWC | 57.15 ms | 56.29 ms | 57.74 ms |
+| Parser | Mean | Min | Max | Peak Memory (RSS) |
+|--------|------|-----|-----|----|
+| Yuku | 28.48 ms | 26.55 ms | 41.77 ms | 40.6 MB |
+| Yuku + Semantic | 45.94 ms | 42.62 ms | 53.29 ms | 186.8 MB |
+| Oxc | 28.62 ms | 25.60 ms | 38.22 ms | 53.2 MB |
+| Oxc + Semantic | 61.52 ms | 58.64 ms | 71.71 ms | 186.8 MB |
+| Jam | 51.92 ms | 47.50 ms | 72.59 ms | 186.8 MB |
+| SWC | 55.86 ms | 52.06 ms | 65.90 ms | 88.9 MB |
 
 ### [Three.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/three.js)
 
@@ -64,14 +64,14 @@ A popular 3D graphics library for the web.
 
 ![Three.js Performance](charts/three.png)
 
-| Parser | Mean | Min | Max |
-|--------|------|-----|-----|
-| Oxc | 7.49 ms | 7.19 ms | 8.22 ms |
-| Oxc + Semantic | 14.02 ms | 13.63 ms | 14.57 ms |
-| Yuku | 8.21 ms | 7.88 ms | 8.97 ms |
-| Yuku + Semantic | 12.08 ms | 11.74 ms | 12.61 ms |
-| SWC | 13.32 ms | 12.84 ms | 14.61 ms |
-| Jam | 13.41 ms | 12.92 ms | 15.97 ms |
+| Parser | Mean | Min | Max | Peak Memory (RSS) |
+|--------|------|-----|-----|----|
+| Oxc | 7.38 ms | 6.13 ms | 22.05 ms | 12.9 MB |
+| Oxc + Semantic | 14.15 ms | 11.87 ms | 27.01 ms | 40.2 MB |
+| Yuku | 8.44 ms | 6.60 ms | 25.23 ms | 11.0 MB |
+| Yuku + Semantic | 11.41 ms | 9.80 ms | 26.52 ms | 40.2 MB |
+| SWC | 12.61 ms | 10.88 ms | 24.15 ms | 21.3 MB |
+| Jam | 12.83 ms | 11.09 ms | 28.64 ms | 40.2 MB |
 
 ### [Ant Design](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/antd.js)
 
@@ -81,14 +81,14 @@ A popular React UI component library with enterprise-class design.
 
 ![Ant Design Performance](charts/antd.png)
 
-| Parser | Mean | Min | Max |
-|--------|------|-----|-----|
-| Oxc | 24.35 ms | 23.32 ms | 26.03 ms |
-| Oxc + Semantic | 47.71 ms | 47.32 ms | 48.61 ms |
-| Yuku | 24.46 ms | 23.25 ms | 37.16 ms |
-| Yuku + Semantic | 38.37 ms | 37.38 ms | 57.43 ms |
-| SWC | 44.35 ms | 43.62 ms | 47.41 ms |
-| Jam | Failed to parse | - | - |
+| Parser | Mean | Min | Max | Peak Memory (RSS) |
+|--------|------|-----|-----|----|
+| Oxc | 22.33 ms | 21.05 ms | 36.81 ms | 40.9 MB |
+| Oxc + Semantic | 44.71 ms | 43.24 ms | 48.06 ms | 70.4 MB |
+| Yuku | 22.90 ms | 20.64 ms | 46.45 ms | 31.2 MB |
+| Yuku + Semantic | 34.67 ms | 33.12 ms | 47.35 ms | 66.3 MB |
+| SWC | 41.50 ms | 39.16 ms | 53.83 ms | 66.3 MB |
+| Jam | Failed to parse | - | - | - |
 
 ## What is Semantic?
 
