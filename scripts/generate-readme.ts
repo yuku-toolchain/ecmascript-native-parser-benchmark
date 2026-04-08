@@ -429,7 +429,7 @@ async function main() {
 	const readme = [
 		"# ECMAScript Native Parser Benchmark",
 		"",
-		"Benchmark ECMAScript parsers implemented in native languages.",
+		"Benchmark ECMAScript parsers compiled to native binaries, measuring raw parsing speed without JavaScript runtime overhead.",
 		"",
 		getSystemInfo(),
 		"",
