@@ -1,5 +1,5 @@
 {
-	"name": "parser-benchmark-native",
+	"name": "ecmascript-parser-benchmark-native",
 	"type": "module",
 	"private": true,
 	"scripts": {

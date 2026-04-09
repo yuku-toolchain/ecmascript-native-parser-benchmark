@@ -301,7 +301,7 @@ async function generateBenchmarksSection(): Promise<string> {
 
 		const chartPath = await generateChart(entries, fileKey);
 		if (chartPath) {
-			lines.push(`![${fileName} Performance](${chartPath})`);
+			lines.push(`![Bar chart comparing native parser speeds for ${fileName}](${chartPath})`);
 			lines.push("");
 		}
 
@@ -336,7 +336,7 @@ async function generateSemanticSection(): Promise<string> {
 
 		const chartPath = await generateChart(entries, `${fileKey}_semantic`);
 		if (chartPath) {
-			lines.push(`![${fileName} Semantic Performance](${chartPath})`);
+			lines.push(`![Bar chart comparing parser speeds with semantic analysis for ${fileName}](${chartPath})`);
 			lines.push("");
 		}
 
@@ -398,8 +398,8 @@ function generateRunSection(): string {
 1. Clone the repository:
 
 \`\`\`bash
-git clone https://github.com/yuku-toolchain/parser-benchmark-native.git
-cd parser-benchmark-native
+git clone https://github.com/yuku-toolchain/ecmascript-parser-benchmark-native.git
+cd ecmascript-parser-benchmark-native
 \`\`\`
 
 2. Install dependencies:
@@ -427,9 +427,9 @@ Each parser is benchmarked using [Hyperfine](https://github.com/sharkdp/hyperfin
 
 async function main() {
 	const readme = [
-		"# ECMAScript Native Parser Benchmark",
+		"# Native ECMAScript Parser Benchmark",
 		"",
-		"Benchmark ECMAScript parsers compiled to native binaries, measuring raw parsing speed without JavaScript runtime overhead.",
+		"Benchmarks for ECMAScript parsers compiled to native binaries (Zig, Rust), measuring raw parsing speed without any JavaScript runtime overhead.",
 		"",
 		getSystemInfo(),
 		"",

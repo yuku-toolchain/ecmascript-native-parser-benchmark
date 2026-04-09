@@ -1,15 +1,15 @@
-# ECMAScript Native Parser Benchmark
+# Native ECMAScript Parser Benchmark
 
-Benchmark ECMAScript parsers compiled to native binaries, measuring raw parsing speed without JavaScript runtime overhead.
+Benchmarks for ECMAScript parsers compiled to native binaries (Zig, Rust), measuring raw parsing speed without any JavaScript runtime overhead.
 
 ## System
 
 | Property | Value |
 |----------|-------|
 | OS | macOS 24.6.0 (arm64) |
-| CPU | Apple M4 Pro (Virtual) |
-| Cores | 6 |
-| Memory | 14 GB |
+| CPU | Apple M3 |
+| Cores | 8 |
+| Memory | 16 GB |
 
 ## Parsers
 
@@ -43,7 +43,7 @@ A JavaScript toolchain written in Zig featuring a parser, linter, formatter, pri
 
 **File size:** 7.83 MB
 
-![typescript.js Performance](charts/typescript.png)
+![Bar chart comparing native parser speeds for typescript.js](charts/typescript.png)
 
 | Parser | Mean | Min | Max | Peak Memory (RSS) |
 |--------|------|-----|-----|----|
@@ -56,7 +56,7 @@ A JavaScript toolchain written in Zig featuring a parser, linter, formatter, pri
 
 **File size:** 1.96 MB
 
-![three.js Performance](charts/three.png)
+![Bar chart comparing native parser speeds for three.js](charts/three.png)
 
 | Parser | Mean | Min | Max | Peak Memory (RSS) |
 |--------|------|-----|-----|----|
@@ -69,7 +69,7 @@ A JavaScript toolchain written in Zig featuring a parser, linter, formatter, pri
 
 **File size:** 0.07 MB
 
-![react.js Performance](charts/react.png)
+![Bar chart comparing native parser speeds for react.js](charts/react.png)
 
 | Parser | Mean | Min | Max | Peak Memory (RSS) |
 |--------|------|-----|-----|----|
@@ -88,7 +88,7 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 ### [typescript.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/typescript.js)
 
-![typescript.js Semantic Performance](charts/typescript_semantic.png)
+![Bar chart comparing parser speeds with semantic analysis for typescript.js](charts/typescript_semantic.png)
 
 | Parser | Mean | Min | Max | Peak Memory (RSS) |
 |--------|------|-----|-----|----|
@@ -97,7 +97,7 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 ### [three.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/three.js)
 
-![three.js Semantic Performance](charts/three_semantic.png)
+![Bar chart comparing parser speeds with semantic analysis for three.js](charts/three_semantic.png)
 
 | Parser | Mean | Min | Max | Peak Memory (RSS) |
 |--------|------|-----|-----|----|
@@ -106,7 +106,7 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 ### [react.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/react.js)
 
-![react.js Semantic Performance](charts/react_semantic.png)
+![Bar chart comparing parser speeds with semantic analysis for react.js](charts/react_semantic.png)
 
 | Parser | Mean | Min | Max | Peak Memory (RSS) |
 |--------|------|-----|-----|----|
@@ -127,8 +127,8 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yuku-toolchain/parser-benchmark-native.git
-cd parser-benchmark-native
+git clone https://github.com/yuku-toolchain/ecmascript-parser-benchmark-native.git
+cd ecmascript-parser-benchmark-native
 ```
 
 2. Install dependencies:
