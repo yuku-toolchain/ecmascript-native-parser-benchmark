@@ -61,9 +61,9 @@ const FILES = {
 		path: "files/typescript.js",
 		source_url: `${FILES_SOURCE_URL_PREFIX}/typescript.js`,
 	},
-	three: {
-		path: "files/three.js",
-		source_url: `${FILES_SOURCE_URL_PREFIX}/three.js`,
+	calcom: {
+		path: "files/calcom.tsx",
+		source_url: `${FILES_SOURCE_URL_PREFIX}/calcom.tsx`,
 	},
 	react: {
 		path: "files/react.js",

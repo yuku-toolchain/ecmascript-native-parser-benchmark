@@ -14,8 +14,8 @@ test    = false
 doctest = false
 
 [[bin]]
-name = "oxc_three"
-path = "src/oxc_three.rs"
+name = "oxc_calcom"
+path = "src/oxc_calcom.rs"
 test    = false
 doctest = false
 
@@ -32,8 +32,8 @@ test    = false
 doctest = false
 
 [[bin]]
-name = "oxc_semantic_three"
-path = "src/oxc_semantic_three.rs"
+name = "oxc_semantic_calcom"
+path = "src/oxc_semantic_calcom.rs"
 test    = false
 doctest = false
 
@@ -50,8 +50,8 @@ test    = false
 doctest = false
 
 [[bin]]
-name = "swc_three"
-path = "src/swc_three.rs"
+name = "swc_calcom"
+path = "src/swc_calcom.rs"
 test    = false
 doctest = false
 

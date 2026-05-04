@@ -41,21 +41,21 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 | Parser | Median | Min | Max |
 |--------|--------|-----|-----|
-| Yuku | 26.46 ms | 25.97 ms | 30.59 ms |
-| Oxc | 28.93 ms | 28.53 ms | 29.88 ms |
-| SWC | 56.80 ms | 55.92 ms | 61.03 ms |
+| Yuku | 27.27 ms | 26.76 ms | 28.60 ms |
+| Oxc | 29.18 ms | 28.53 ms | 134.25 ms |
+| SWC | 57.47 ms | 56.59 ms | 82.21 ms |
 
-### [three.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/three.js)
+### [calcom.tsx](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/calcom.tsx)
 
-**File size:** 1.96 MB
+**File size:** 1.01 MB
 
-![Bar chart comparing native parser speeds for three.js](charts/three.png)
+![Bar chart comparing native parser speeds for calcom.tsx](charts/calcom.png)
 
 | Parser | Median | Min | Max |
 |--------|--------|-----|-----|
-| Oxc | 7.39 ms | 7.22 ms | 7.81 ms |
-| Yuku | 7.53 ms | 7.36 ms | 8.74 ms |
-| SWC | 12.99 ms | 12.66 ms | 13.61 ms |
+| Yuku | 5.68 ms | 5.45 ms | 9.30 ms |
+| Oxc | 5.93 ms | 5.81 ms | 21.25 ms |
+| SWC | 9.95 ms | 9.74 ms | 16.63 ms |
 
 ### [react.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/react.js)
 
@@ -65,9 +65,9 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 | Parser | Median | Min | Max |
 |--------|--------|-----|-----|
-| Oxc | 1.43 ms | 1.35 ms | 3.01 ms |
-| Yuku | 1.54 ms | 1.47 ms | 1.93 ms |
-| SWC | 1.80 ms | 1.70 ms | 2.09 ms |
+| Oxc | 1.48 ms | 1.37 ms | 9.10 ms |
+| Yuku | 1.56 ms | 1.49 ms | 1.82 ms |
+| SWC | 1.80 ms | 1.68 ms | 2.16 ms |
 
 ## Semantic
 
@@ -83,17 +83,17 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 | Parser | Median | Min | Max |
 |--------|--------|-----|-----|
-| Yuku + Semantic | 44.23 ms | 43.76 ms | 47.14 ms |
-| Oxc + Semantic | 64.63 ms | 63.92 ms | 70.34 ms |
+| Yuku + Semantic | 45.46 ms | 44.86 ms | 51.55 ms |
+| Oxc + Semantic | 64.46 ms | 63.98 ms | 91.73 ms |
 
-### [three.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/three.js)
+### [calcom.tsx](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/calcom.tsx)
 
-![Bar chart comparing parser speeds with semantic analysis for three.js](charts/three_semantic.png)
+![Bar chart comparing parser speeds with semantic analysis for calcom.tsx](charts/calcom_semantic.png)
 
 | Parser | Median | Min | Max |
 |--------|--------|-----|-----|
-| Yuku + Semantic | 11.37 ms | 11.11 ms | 13.58 ms |
-| Oxc + Semantic | 13.80 ms | 13.51 ms | 16.84 ms |
+| Yuku + Semantic | 8.54 ms | 8.40 ms | 8.80 ms |
+| Oxc + Semantic | 10.15 ms | 9.97 ms | 10.46 ms |
 
 ### [react.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/react.js)
 
@@ -101,8 +101,8 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 | Parser | Median | Min | Max |
 |--------|--------|-----|-----|
-| Yuku + Semantic | 1.71 ms | 1.63 ms | 2.03 ms |
-| Oxc + Semantic | 1.75 ms | 1.66 ms | 2.24 ms |
+| Yuku + Semantic | 1.76 ms | 1.62 ms | 2.00 ms |
+| Oxc + Semantic | 1.80 ms | 1.68 ms | 22.62 ms |
 
 ## Run Benchmarks
 
