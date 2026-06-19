@@ -39,11 +39,11 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 ![Bar chart comparing native parser speeds for typescript.js](charts/typescript.png)
 
-| Parser | Median | Min | Max |
+| Parser | Median | Min | p99 |
 |--------|--------|-----|-----|
-| Yuku | 28.15 ms | 27.49 ms | 29.51 ms |
-| Oxc | 28.53 ms | 27.75 ms | 29.09 ms |
-| SWC | 56.55 ms | 55.45 ms | 59.37 ms |
+| Oxc | 23.87 ms | 23.56 ms | 24.42 ms |
+| Yuku | 26.49 ms | 25.39 ms | 27.15 ms |
+| SWC | 41.50 ms | 40.84 ms | 42.40 ms |
 
 ### [calcom.tsx](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/calcom.tsx)
 
@@ -51,11 +51,11 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 ![Bar chart comparing native parser speeds for calcom.tsx](charts/calcom.png)
 
-| Parser | Median | Min | Max |
+| Parser | Median | Min | p99 |
 |--------|--------|-----|-----|
-| Yuku | 6.02 ms | 5.83 ms | 38.51 ms |
-| Oxc | 6.11 ms | 5.83 ms | 36.16 ms |
-| SWC | 10.02 ms | 9.59 ms | 11.39 ms |
+| Oxc | 3.59 ms | 3.55 ms | 3.83 ms |
+| Yuku | 4.18 ms | 3.89 ms | 4.31 ms |
+| SWC | 6.23 ms | 6.13 ms | 6.67 ms |
 
 ### [react.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/react.js)
 
@@ -63,11 +63,11 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 ![Bar chart comparing native parser speeds for react.js](charts/react.png)
 
-| Parser | Median | Min | Max |
+| Parser | Median | Min | p99 |
 |--------|--------|-----|-----|
-| Oxc | 1.48 ms | 1.36 ms | 30.66 ms |
-| Yuku | 1.62 ms | 1.47 ms | 23.85 ms |
-| SWC | 1.85 ms | 1.73 ms | 7.06 ms |
+| Oxc | 0.16 ms | 0.16 ms | 0.17 ms |
+| Yuku | 0.18 ms | 0.17 ms | 0.18 ms |
+| SWC | 0.27 ms | 0.27 ms | 0.28 ms |
 
 ## Semantic
 
@@ -81,28 +81,28 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 ![Bar chart comparing parser speeds with semantic analysis for typescript.js](charts/typescript_semantic.png)
 
-| Parser | Median | Min | Max |
+| Parser | Median | Min | p99 |
 |--------|--------|-----|-----|
-| Yuku + Semantic | 47.31 ms | 46.27 ms | 48.07 ms |
-| Oxc + Semantic | 64.90 ms | 63.69 ms | 74.46 ms |
+| Yuku + Semantic | 44.15 ms | 42.84 ms | 45.46 ms |
+| Oxc + Semantic | 53.92 ms | 53.08 ms | 54.90 ms |
 
 ### [calcom.tsx](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/calcom.tsx)
 
 ![Bar chart comparing parser speeds with semantic analysis for calcom.tsx](charts/calcom_semantic.png)
 
-| Parser | Median | Min | Max |
+| Parser | Median | Min | p99 |
 |--------|--------|-----|-----|
-| Yuku + Semantic | 10.22 ms | 9.95 ms | 45.07 ms |
-| Oxc + Semantic | 10.34 ms | 9.98 ms | 14.39 ms |
+| Oxc + Semantic | 7.08 ms | 6.98 ms | 7.31 ms |
+| Yuku + Semantic | 8.21 ms | 7.92 ms | 8.39 ms |
 
 ### [react.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/react.js)
 
 ![Bar chart comparing parser speeds with semantic analysis for react.js](charts/react_semantic.png)
 
-| Parser | Median | Min | Max |
+| Parser | Median | Min | p99 |
 |--------|--------|-----|-----|
-| Yuku + Semantic | 1.79 ms | 1.68 ms | 11.18 ms |
-| Oxc + Semantic | 1.80 ms | 1.69 ms | 2.14 ms |
+| Yuku + Semantic | 0.31 ms | 0.31 ms | 0.32 ms |
+| Oxc + Semantic | 0.34 ms | 0.34 ms | 0.49 ms |
 
 ## Run Benchmarks
 
@@ -111,7 +111,6 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 - [Bun](https://bun.sh/) - JavaScript runtime and package manager
 - [Rust](https://www.rust-lang.org/tools/install) - For building Rust-based parsers
 - [Zig](https://ziglang.org/download/) - For building Zig-based parsers (requires nightly/development version)
-- [Hyperfine](https://github.com/sharkdp/hyperfine) - Command-line benchmarking tool
 
 ### Steps
 
@@ -138,6 +137,8 @@ This will build all parsers and run benchmarks on all test files. Results are sa
 
 ## Methodology
 
-All parsers are compiled with release optimizations. Source files are embedded at compile time (Zig `@embedFile`, Rust `include_str!`) to eliminate file I/O from measurements. Rust parsers are built with `cargo build --release` using LTO, a single codegen unit, and symbol stripping. Zig parsers are built with `zig build --release=fast`.
+Parsing is timed in-process to isolate it from process startup, dynamic linking, file I/O, and memory teardown, which would otherwise dominate the measurement on smaller files.
 
-Each parser is benchmarked using [Hyperfine](https://github.com/sharkdp/hyperfine) with `--shell=none` to eliminate shell overhead, 30 warmup runs, and a minimum of 200 timed runs. Results use the **median** rather than the mean to provide stable, outlier-resistant measurements. In CI, the CPU frequency governor is set to `performance` mode and processes are pinned to a dedicated core to minimize scheduling noise. Each run measures the time to parse the entire file into an AST and free the allocated memory.
+The source is read once, then each parser runs 50 warmup iterations followed by 300 timed iterations. A monotonic clock wraps only the parse call (plus the semantic pass for the semantic variants); allocation and teardown happen outside the timed region, and the result passes through an optimization barrier so the work cannot be elided. Reported figures are the median, minimum, and 99th percentile of the timed runs.
+
+Binaries are built with release optimizations: Rust with `cargo build --release` (LTO, single codegen unit, symbol stripping) and Zig with `zig build --release=fast`. Each uses a fast general-purpose allocator (Rust `mimalloc`, Zig `smp_allocator`).

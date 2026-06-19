@@ -75,13 +75,10 @@ type ParserKey = keyof typeof PARSERS;
 type FileKey = keyof typeof FILES;
 
 interface BenchmarkResult {
-	command: string;
-	mean: number;
-	stddev: number;
+	parser: string;
 	median: number;
 	min: number;
-	max: number;
-	memory_usage_byte?: number[];
+	p99: number;
 }
 
 interface ParserEntry {
@@ -98,27 +95,6 @@ function formatTime(seconds: number): string {
 	return `${(seconds * 1000).toFixed(2)} ms`;
 }
 
-function formatMemory(bytes: number): string {
-	return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
-
-function getPeakMemory(result: BenchmarkResult): number | null {
-	if (!result.memory_usage_byte || result.memory_usage_byte.length === 0)
-		return null;
-	return Math.max(...result.memory_usage_byte);
-}
-
-function extractParserName(command: string): string {
-	const match = command.match(/\.\/bin\/(\w+)/);
-	if (!match) return "unknown";
-	const name = match[1];
-	const keys = Object.keys(PARSERS).sort((a, b) => b.length - a.length);
-	for (const key of keys) {
-		if (name.startsWith(key + "_") || name === key) return key;
-	}
-	return "unknown";
-}
-
 async function readBenchmarkResults(fileKey: FileKey) {
 	const content = await readFile(join(process.cwd(), "result", `${fileKey}.json`), "utf-8");
 	return JSON.parse(content) as { results: BenchmarkResult[] };
@@ -127,9 +103,8 @@ async function readBenchmarkResults(fileKey: FileKey) {
 function getParserEntries(data: { results: BenchmarkResult[] }, semantic: boolean): ParserEntry[] {
 	const resultsByParser = new Map<string, BenchmarkResult>();
 	for (const result of data.results) {
-		const key = extractParserName(result.command);
-		if (key !== "unknown" && PARSERS[key as ParserKey]) {
-			resultsByParser.set(key, result);
+		if (PARSERS[result.parser as ParserKey]) {
+			resultsByParser.set(result.parser, result);
 		}
 	}
 
@@ -243,33 +218,14 @@ async function generateChart(entries: ParserEntry[], chartName: string): Promise
 }
 
 function generateTable(entries: ParserEntry[]): string {
-	const hasMemoryData = entries.some(
-		({ result }) => result && getPeakMemory(result) !== null,
-	);
-
-	const lines: string[] = [];
-
-	if (hasMemoryData) {
-		lines.push("| Parser | Median | Min | Max | Peak Memory (RSS) |");
-		lines.push("|--------|--------|-----|-----|----|");
-	} else {
-		lines.push("| Parser | Median | Min | Max |");
-		lines.push("|--------|--------|-----|-----|");
-	}
+	const lines = ["| Parser | Median | Min | p99 |", "|--------|--------|-----|-----|"];
 
 	for (const { name, result } of entries) {
-		if (!result) {
-			lines.push(hasMemoryData
-				? `| ${name} | Failed to parse | - | - | - |`
-				: `| ${name} | Failed to parse | - | - |`);
-			continue;
-		}
-
-		const memory = getPeakMemory(result);
-		const memoryStr = memory ? formatMemory(memory) : "-";
-		lines.push(hasMemoryData
-			? `| ${name} | ${formatTime(result.median)} | ${formatTime(result.min)} | ${formatTime(result.max)} | ${memoryStr} |`
-			: `| ${name} | ${formatTime(result.median)} | ${formatTime(result.min)} | ${formatTime(result.max)} |`);
+		lines.push(
+			result
+				? `| ${name} | ${formatTime(result.median)} | ${formatTime(result.min)} | ${formatTime(result.p99)} |`
+				: `| ${name} | Failed to parse | - | - |`,
+		);
 	}
 
 	return lines.join("\n");
@@ -382,7 +338,6 @@ function generateRunSection(): string {
 - [Bun](https://bun.sh/) - JavaScript runtime and package manager
 - [Rust](https://www.rust-lang.org/tools/install) - For building Rust-based parsers
 - [Zig](https://ziglang.org/download/) - For building Zig-based parsers (requires nightly/development version)
-- [Hyperfine](https://github.com/sharkdp/hyperfine) - Command-line benchmarking tool
 
 ### Steps
 
@@ -411,9 +366,11 @@ This will build all parsers and run benchmarks on all test files. Results are sa
 function generateMethodologySection(): string {
 	return `## Methodology
 
-All parsers are compiled with release optimizations. Source files are embedded at compile time (Zig \`@embedFile\`, Rust \`include_str!\`) to eliminate file I/O from measurements. Rust parsers are built with \`cargo build --release\` using LTO, a single codegen unit, and symbol stripping. Zig parsers are built with \`zig build --release=fast\`.
+Parsing is timed in-process to isolate it from process startup, dynamic linking, file I/O, and memory teardown, which would otherwise dominate the measurement on smaller files.
 
-Each parser is benchmarked using [Hyperfine](https://github.com/sharkdp/hyperfine) with \`--shell=none\` to eliminate shell overhead, 30 warmup runs, and a minimum of 200 timed runs. Results use the **median** rather than the mean to provide stable, outlier-resistant measurements. In CI, the CPU frequency governor is set to \`performance\` mode and processes are pinned to a dedicated core to minimize scheduling noise. Each run measures the time to parse the entire file into an AST and free the allocated memory.`;
+The source is read once, then each parser runs 50 warmup iterations followed by 300 timed iterations. A monotonic clock wraps only the parse call (plus the semantic pass for the semantic variants); allocation and teardown happen outside the timed region, and the result passes through an optimization barrier so the work cannot be elided. Reported figures are the median, minimum, and 99th percentile of the timed runs.
+
+Binaries are built with release optimizations: Rust with \`cargo build --release\` (LTO, single codegen unit, symbol stripping) and Zig with \`zig build --release=fast\`. Each uses a fast general-purpose allocator (Rust \`mimalloc\`, Zig \`smp_allocator\`).`;
 }
 
 async function main() {
