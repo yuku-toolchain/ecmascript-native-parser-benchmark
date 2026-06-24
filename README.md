@@ -17,7 +17,7 @@ Benchmarks for ECMAScript parsers compiled to native binaries (Zig, Rust), measu
 
 **Language:** Zig
 
-A high-performance & spec-compliant JavaScript/TypeScript compiler written in Zig.
+A high-performance & spec-compliant JavaScript/TypeScript compiler toolchain written in Zig.
 
 ### [Oxc](https://github.com/oxc-project/oxc)
 
