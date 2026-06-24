@@ -61,9 +61,9 @@ const FILES = {
 		path: "files/typescript.js",
 		source_url: `${FILES_SOURCE_URL_PREFIX}/typescript.js`,
 	},
-	calcom: {
-		path: "files/calcom.tsx",
-		source_url: `${FILES_SOURCE_URL_PREFIX}/calcom.tsx`,
+	checker: {
+		path: "files/checker.ts",
+		source_url: `${FILES_SOURCE_URL_PREFIX}/checker.ts`,
 	},
 	react: {
 		path: "files/react.js",
@@ -218,13 +218,25 @@ async function generateChart(entries: ParserEntry[], chartName: string): Promise
 }
 
 function generateTable(entries: ParserEntry[]): string {
-	const lines = ["| Parser | Median | Min | p99 |", "|--------|--------|-----|-----|"];
+	const lines = [
+		"| Parser | Median | Min | p99 | Relative |",
+		"|--------|--------|-----|-----|----------|",
+	];
+
+	const fastest = entries.reduce<number | null>(
+		(min, e) =>
+			e.result && (min === null || e.result.median < min) ? e.result.median : min,
+		null,
+	);
 
 	for (const { name, result } of entries) {
+		if (!result) {
+			lines.push(`| ${name} | Failed to parse | - | - | - |`);
+			continue;
+		}
+		const relative = fastest ? `${(result.median / fastest).toFixed(2)}×` : "-";
 		lines.push(
-			result
-				? `| ${name} | ${formatTime(result.median)} | ${formatTime(result.min)} | ${formatTime(result.p99)} |`
-				: `| ${name} | Failed to parse | - | - |`,
+			`| ${name} | ${formatTime(result.median)} | ${formatTime(result.min)} | ${formatTime(result.p99)} | ${relative} |`,
 		);
 	}
 

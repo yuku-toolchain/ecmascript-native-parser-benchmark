@@ -3,7 +3,7 @@ import { join } from "node:path";
 
 const FILES = [
 	{ key: "typescript", path: "files/typescript.js" },
-	{ key: "calcom", path: "files/calcom.tsx" },
+	{ key: "checker", path: "files/checker.ts" },
 	{ key: "react", path: "files/react.js" },
 ] as const;
 

@@ -39,23 +39,23 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 ![Bar chart comparing native parser speeds for typescript.js](charts/typescript.png)
 
-| Parser | Median | Min | p99 |
-|--------|--------|-----|-----|
-| Yuku | 22.41 ms | 21.91 ms | 46.32 ms |
-| Oxc | 23.95 ms | 23.85 ms | 25.92 ms |
-| SWC | 42.33 ms | 41.21 ms | 64.93 ms |
+| Parser | Median | Min | p99 | Relative |
+|--------|--------|-----|-----|----------|
+| Yuku | 22.04 ms | 21.76 ms | 22.49 ms | 1.00× |
+| Oxc | 23.94 ms | 23.82 ms | 24.23 ms | 1.09× |
+| SWC | 41.21 ms | 40.68 ms | 41.91 ms | 1.87× |
 
-### [calcom.tsx](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/calcom.tsx)
+### [checker.ts](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/checker.ts)
 
-**File size:** 1.01 MB
+**File size:** 2.95 MB
 
-![Bar chart comparing native parser speeds for calcom.tsx](charts/calcom.png)
+![Bar chart comparing native parser speeds for checker.ts](charts/checker.png)
 
-| Parser | Median | Min | p99 |
-|--------|--------|-----|-----|
-| Yuku | 3.50 ms | 3.45 ms | 3.73 ms |
-| Oxc | 3.66 ms | 3.53 ms | 9.02 ms |
-| SWC | 6.28 ms | 6.10 ms | 6.89 ms |
+| Parser | Median | Min | p99 | Relative |
+|--------|--------|-----|-----|----------|
+| Yuku | 7.38 ms | 7.34 ms | 7.55 ms | 1.00× |
+| Oxc | 7.73 ms | 7.67 ms | 7.99 ms | 1.05× |
+| SWC | 13.51 ms | 13.16 ms | 15.64 ms | 1.83× |
 
 ### [react.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/react.js)
 
@@ -63,11 +63,11 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 ![Bar chart comparing native parser speeds for react.js](charts/react.png)
 
-| Parser | Median | Min | p99 |
-|--------|--------|-----|-----|
-| Yuku | 0.14 ms | 0.14 ms | 0.15 ms |
-| Oxc | 0.16 ms | 0.16 ms | 0.18 ms |
-| SWC | 0.28 ms | 0.27 ms | 0.30 ms |
+| Parser | Median | Min | p99 | Relative |
+|--------|--------|-----|-----|----------|
+| Yuku | 0.14 ms | 0.14 ms | 0.15 ms | 1.00× |
+| Oxc | 0.16 ms | 0.16 ms | 0.17 ms | 1.15× |
+| SWC | 0.27 ms | 0.27 ms | 0.28 ms | 1.94× |
 
 ## Semantic
 
@@ -81,28 +81,28 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 ![Bar chart comparing parser speeds with semantic analysis for typescript.js](charts/typescript_semantic.png)
 
-| Parser | Median | Min | p99 |
-|--------|--------|-----|-----|
-| Yuku + Semantic | 39.41 ms | 39.04 ms | 43.03 ms |
-| Oxc + Semantic | 54.44 ms | 52.99 ms | 79.01 ms |
+| Parser | Median | Min | p99 | Relative |
+|--------|--------|-----|-----|----------|
+| Yuku + Semantic | 39.54 ms | 39.25 ms | 40.57 ms | 1.00× |
+| Oxc + Semantic | 55.01 ms | 53.07 ms | 56.58 ms | 1.39× |
 
-### [calcom.tsx](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/calcom.tsx)
+### [checker.ts](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/checker.ts)
 
-![Bar chart comparing parser speeds with semantic analysis for calcom.tsx](charts/calcom_semantic.png)
+![Bar chart comparing parser speeds with semantic analysis for checker.ts](charts/checker_semantic.png)
 
-| Parser | Median | Min | p99 |
-|--------|--------|-----|-----|
-| Oxc + Semantic | 7.06 ms | 6.96 ms | 7.65 ms |
-| Yuku + Semantic | 7.58 ms | 7.51 ms | 11.13 ms |
+| Parser | Median | Min | p99 | Relative |
+|--------|--------|-----|-----|----------|
+| Yuku + Semantic | 12.93 ms | 12.84 ms | 13.49 ms | 1.00× |
+| Oxc + Semantic | 18.11 ms | 17.87 ms | 36.31 ms | 1.40× |
 
 ### [react.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/react.js)
 
 ![Bar chart comparing parser speeds with semantic analysis for react.js](charts/react_semantic.png)
 
-| Parser | Median | Min | p99 |
-|--------|--------|-----|-----|
-| Yuku + Semantic | 0.27 ms | 0.27 ms | 0.29 ms |
-| Oxc + Semantic | 0.34 ms | 0.34 ms | 0.36 ms |
+| Parser | Median | Min | p99 | Relative |
+|--------|--------|-----|-----|----------|
+| Yuku + Semantic | 0.27 ms | 0.26 ms | 0.28 ms | 1.00× |
+| Oxc + Semantic | 0.34 ms | 0.34 ms | 0.36 ms | 1.28× |
 
 ## Run Benchmarks
 
