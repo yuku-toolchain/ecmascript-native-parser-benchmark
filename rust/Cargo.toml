@@ -3,64 +3,6 @@ name = "rust_parsers"
 version = "0.1.0"
 edition = "2024"
 
-[lib]
-name = "rust_parsers"
-path = "src/lib.rs"
-
-[[bin]]
-name = "oxc_typescript"
-path = "src/oxc_typescript.rs"
-test    = false
-doctest = false
-
-[[bin]]
-name = "oxc_calcom"
-path = "src/oxc_calcom.rs"
-test    = false
-doctest = false
-
-[[bin]]
-name = "oxc_react"
-path = "src/oxc_react.rs"
-test    = false
-doctest = false
-
-[[bin]]
-name = "oxc_semantic_typescript"
-path = "src/oxc_semantic_typescript.rs"
-test    = false
-doctest = false
-
-[[bin]]
-name = "oxc_semantic_calcom"
-path = "src/oxc_semantic_calcom.rs"
-test    = false
-doctest = false
-
-[[bin]]
-name = "oxc_semantic_react"
-path = "src/oxc_semantic_react.rs"
-test    = false
-doctest = false
-
-[[bin]]
-name = "swc_typescript"
-path = "src/swc_typescript.rs"
-test    = false
-doctest = false
-
-[[bin]]
-name = "swc_calcom"
-path = "src/swc_calcom.rs"
-test    = false
-doctest = false
-
-[[bin]]
-name = "swc_react"
-path = "src/swc_react.rs"
-test    = false
-doctest = false
-
 [dependencies]
 oxc_allocator = "0.102.0"
 oxc_parser = "0.102.0"
@@ -68,7 +10,6 @@ oxc_semantic = "0.102.0"
 oxc_span = "0.102.0"
 
 swc_ecma_parser = { version = "33.0.0", features = ["typescript"] }
-swc_ecma_ast = "20.0.0"
 swc_common = "18.0.1"
 
 mimalloc = { package = "mimalloc-safe", version = "0.1.52" }
