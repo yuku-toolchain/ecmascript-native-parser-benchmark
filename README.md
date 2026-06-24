@@ -41,9 +41,9 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 | Parser | Median | Min | p99 |
 |--------|--------|-----|-----|
-| Oxc | 23.96 ms | 23.83 ms | 47.12 ms |
-| Yuku | 26.15 ms | 25.71 ms | 32.27 ms |
-| SWC | 43.68 ms | 41.20 ms | 72.49 ms |
+| Yuku | 22.41 ms | 21.91 ms | 46.32 ms |
+| Oxc | 23.95 ms | 23.85 ms | 25.92 ms |
+| SWC | 42.33 ms | 41.21 ms | 64.93 ms |
 
 ### [calcom.tsx](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/calcom.tsx)
 
@@ -53,9 +53,9 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 | Parser | Median | Min | p99 |
 |--------|--------|-----|-----|
-| Oxc | 3.58 ms | 3.54 ms | 3.78 ms |
-| Yuku | 3.97 ms | 3.91 ms | 4.41 ms |
-| SWC | 6.34 ms | 6.18 ms | 6.88 ms |
+| Yuku | 3.50 ms | 3.45 ms | 3.73 ms |
+| Oxc | 3.66 ms | 3.53 ms | 9.02 ms |
+| SWC | 6.28 ms | 6.10 ms | 6.89 ms |
 
 ### [react.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/react.js)
 
@@ -65,9 +65,9 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 | Parser | Median | Min | p99 |
 |--------|--------|-----|-----|
-| Oxc | 0.16 ms | 0.16 ms | 0.21 ms |
-| Yuku | 0.17 ms | 0.17 ms | 0.18 ms |
-| SWC | 0.28 ms | 0.27 ms | 0.31 ms |
+| Yuku | 0.14 ms | 0.14 ms | 0.15 ms |
+| Oxc | 0.16 ms | 0.16 ms | 0.18 ms |
+| SWC | 0.28 ms | 0.27 ms | 0.30 ms |
 
 ## Semantic
 
@@ -83,8 +83,8 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 | Parser | Median | Min | p99 |
 |--------|--------|-----|-----|
-| Yuku + Semantic | 43.85 ms | 43.10 ms | 83.55 ms |
-| Oxc + Semantic | 54.13 ms | 53.17 ms | 73.92 ms |
+| Yuku + Semantic | 39.41 ms | 39.04 ms | 43.03 ms |
+| Oxc + Semantic | 54.44 ms | 52.99 ms | 79.01 ms |
 
 ### [calcom.tsx](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/calcom.tsx)
 
@@ -92,8 +92,8 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 | Parser | Median | Min | p99 |
 |--------|--------|-----|-----|
-| Oxc + Semantic | 7.09 ms | 7.00 ms | 13.57 ms |
-| Yuku + Semantic | 8.07 ms | 7.98 ms | 8.50 ms |
+| Oxc + Semantic | 7.06 ms | 6.96 ms | 7.65 ms |
+| Yuku + Semantic | 7.58 ms | 7.51 ms | 11.13 ms |
 
 ### [react.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/react.js)
 
@@ -101,8 +101,8 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 | Parser | Median | Min | p99 |
 |--------|--------|-----|-----|
-| Yuku + Semantic | 0.30 ms | 0.30 ms | 0.31 ms |
-| Oxc + Semantic | 0.34 ms | 0.34 ms | 0.37 ms |
+| Yuku + Semantic | 0.27 ms | 0.27 ms | 0.29 ms |
+| Oxc + Semantic | 0.34 ms | 0.34 ms | 0.36 ms |
 
 ## Run Benchmarks
 
