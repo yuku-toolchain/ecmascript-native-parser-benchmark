@@ -41,9 +41,9 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 | Parser | Median | Min | p99 | Relative |
 |--------|--------|-----|-----|----------|
-| Yuku | 22.04 ms | 21.76 ms | 22.49 ms | 1.00× |
-| Oxc | 23.94 ms | 23.82 ms | 24.23 ms | 1.09× |
-| SWC | 41.21 ms | 40.68 ms | 41.91 ms | 1.87× |
+| Yuku | 19.38 ms | 19.29 ms | 19.57 ms | 1.00× |
+| Oxc | 23.88 ms | 23.79 ms | 25.25 ms | 1.23× |
+| SWC | 42.71 ms | 42.28 ms | 43.27 ms | 2.20× |
 
 ### [checker.ts](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/checker.ts)
 
@@ -53,9 +53,9 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 | Parser | Median | Min | p99 | Relative |
 |--------|--------|-----|-----|----------|
-| Yuku | 7.38 ms | 7.34 ms | 7.55 ms | 1.00× |
-| Oxc | 7.73 ms | 7.67 ms | 7.99 ms | 1.05× |
-| SWC | 13.51 ms | 13.16 ms | 15.64 ms | 1.83× |
+| Yuku | 6.64 ms | 6.60 ms | 6.71 ms | 1.00× |
+| Oxc | 7.78 ms | 7.72 ms | 8.08 ms | 1.17× |
+| SWC | 13.68 ms | 13.20 ms | 20.87 ms | 2.06× |
 
 ### [react.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/react.js)
 
@@ -65,15 +65,15 @@ An extensible Rust-based platform for compiling and bundling JavaScript and Type
 
 | Parser | Median | Min | p99 | Relative |
 |--------|--------|-----|-----|----------|
-| Yuku | 0.14 ms | 0.14 ms | 0.15 ms | 1.00× |
-| Oxc | 0.16 ms | 0.16 ms | 0.17 ms | 1.15× |
-| SWC | 0.27 ms | 0.27 ms | 0.28 ms | 1.94× |
+| Yuku | 0.12 ms | 0.12 ms | 0.13 ms | 1.00× |
+| Oxc | 0.16 ms | 0.16 ms | 0.17 ms | 1.33× |
+| SWC | 0.27 ms | 0.27 ms | 0.29 ms | 2.30× |
 
 ## Semantic
 
 The ECMAScript specification defines a set of early errors that conformant implementations must report before execution. Some of these are detectable during parsing from local context alone, like `return` outside a function, `yield` outside a generator, invalid destructuring, etc. Others require knowledge of the program's scope structure and bindings, such as redeclarations, unresolved exports, private fields used outside their class, etc.
 
-Parsers handle this differently: SWC checks some scope-dependent errors during parsing itself, while Yuku and Oxc defer them entirely to a separate semantic analysis pass. This keeps parsing fast and lets each consumer opt in only to the work it actually needs.
+Parsers handle this differently: SWC checks some scope-dependent errors during parsing itself, while Yuku and Oxc defer them entirely to a separate semantic analysis pass. This keeps parsing fast and lets each consumer opt in only to the work it actually needs. A formatter, for example, only needs the AST and should not pay the cost of scope resolution.
 
 The benchmarks below measure parsing followed by this additional pass, which builds a scope tree and symbol table, resolves identifier references to their declarations, and reports the remaining early errors. Together, parsing and semantic analysis cover the full set of early errors required by the specification.
 
@@ -83,8 +83,8 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 | Parser | Median | Min | p99 | Relative |
 |--------|--------|-----|-----|----------|
-| Yuku + Semantic | 39.54 ms | 39.25 ms | 40.57 ms | 1.00× |
-| Oxc + Semantic | 55.01 ms | 53.07 ms | 56.58 ms | 1.39× |
+| Yuku + Semantic | 41.82 ms | 41.51 ms | 43.33 ms | 1.00× |
+| Oxc + Semantic | 53.67 ms | 52.97 ms | 55.94 ms | 1.28× |
 
 ### [checker.ts](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/checker.ts)
 
@@ -92,8 +92,8 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 | Parser | Median | Min | p99 | Relative |
 |--------|--------|-----|-----|----------|
-| Yuku + Semantic | 12.93 ms | 12.84 ms | 13.49 ms | 1.00× |
-| Oxc + Semantic | 18.11 ms | 17.87 ms | 36.31 ms | 1.40× |
+| Yuku + Semantic | 14.79 ms | 14.69 ms | 15.03 ms | 1.00× |
+| Oxc + Semantic | 18.32 ms | 18.15 ms | 18.84 ms | 1.24× |
 
 ### [react.js](https://raw.githubusercontent.com/yuku-toolchain/parser-benchmark-files/refs/heads/main/react.js)
 
@@ -101,8 +101,8 @@ The benchmarks below measure parsing followed by this additional pass, which bui
 
 | Parser | Median | Min | p99 | Relative |
 |--------|--------|-----|-----|----------|
-| Yuku + Semantic | 0.27 ms | 0.26 ms | 0.28 ms | 1.00× |
-| Oxc + Semantic | 0.34 ms | 0.34 ms | 0.36 ms | 1.28× |
+| Yuku + Semantic | 0.27 ms | 0.26 ms | 0.31 ms | 1.00× |
+| Oxc + Semantic | 0.34 ms | 0.34 ms | 0.39 ms | 1.28× |
 
 ## Run Benchmarks
 
