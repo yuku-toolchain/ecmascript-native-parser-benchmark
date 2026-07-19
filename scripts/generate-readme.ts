@@ -94,6 +94,10 @@ function formatTime(seconds: number): string {
   return `${(seconds * 1000).toFixed(2)} ms`;
 }
 
+function formatThroughput(bytes: number, seconds: number): string {
+  return `${(bytes / (1024 * 1024) / seconds).toFixed(1)} MB/s`;
+}
+
 async function readBenchmarkResults(fileKey: FileKey) {
   const content = await readFile(join(process.cwd(), "result", `${fileKey}.json`), "utf-8");
   return JSON.parse(content) as { results: BenchmarkResult[] };
@@ -216,10 +220,10 @@ async function generateChart(entries: ParserEntry[], chartName: string): Promise
   return `charts/${chartName}.png`;
 }
 
-function generateTable(entries: ParserEntry[]): string {
+function generateTable(entries: ParserEntry[], fileSize: number): string {
   const lines = [
-    "| Parser | Median | Min | p99 | Relative |",
-    "|--------|--------|-----|-----|----------|",
+    "| Parser | Median | Min | p99 | Throughput | Relative |",
+    "|--------|--------|-----|-----|------------|----------|",
   ];
 
   const fastest = entries.reduce<number | null>(
@@ -229,12 +233,12 @@ function generateTable(entries: ParserEntry[]): string {
 
   for (const { name, result } of entries) {
     if (!result) {
-      lines.push(`| ${name} | Failed to parse | - | - | - |`);
+      lines.push(`| ${name} | Failed to parse | - | - | - | - |`);
       continue;
     }
     const relative = fastest ? `${(result.median / fastest).toFixed(2)}×` : "-";
     lines.push(
-      `| ${name} | ${formatTime(result.median)} | ${formatTime(result.min)} | ${formatTime(result.p99)} | ${relative} |`,
+      `| ${name} | ${formatTime(result.median)} | ${formatTime(result.min)} | ${formatTime(result.p99)} | ${formatThroughput(fileSize, result.median)} | ${relative} |`,
     );
   }
 
@@ -262,7 +266,7 @@ async function generateBenchmarksSection(): Promise<string> {
       lines.push("");
     }
 
-    lines.push(generateTable(entries));
+    lines.push(generateTable(entries, fileSize));
     lines.push("");
   }
 
@@ -290,6 +294,7 @@ async function generateSemanticSection(): Promise<string> {
   for (const [key, file] of Object.entries(FILES)) {
     const fileKey = key as FileKey;
     const fileName = file.path.split("/").pop()!;
+    const fileSize = (await stat(join(process.cwd(), file.path))).size;
     const data = await readBenchmarkResults(fileKey);
     const entries = getParserEntries(data, true);
     if (entries.every((e) => e.result == null)) continue;
@@ -305,7 +310,7 @@ async function generateSemanticSection(): Promise<string> {
       lines.push("");
     }
 
-    lines.push(generateTable(entries));
+    lines.push(generateTable(entries, fileSize));
     lines.push("");
   }
 

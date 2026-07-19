@@ -24,6 +24,7 @@ function runBench(bin: string, paths: string[]): Result[] {
 }
 
 const ms = (s: number) => `${(s * 1000).toFixed(3)} ms`;
+const mbps = (bytes: number, s: number) => `${(bytes / (1024 * 1024) / s).toFixed(1)} MB/s`;
 
 const paths = FILES.map((f) => f.path);
 const results = BINS.flatMap((bin) => {
@@ -43,8 +44,9 @@ for (const file of FILES) {
     `${JSON.stringify({ results: entries }, null, 2)}\n`,
   );
 
+  const fileSize = Bun.file(file.path).size;
   console.log(`\n${file.path}`);
   for (const r of [...entries].sort((a, b) => a.median - b.median)) {
-    console.log(`  ${r.parser.padEnd(16)} ${ms(r.median)}`);
+    console.log(`  ${r.parser.padEnd(16)} ${ms(r.median).padEnd(12)} ${mbps(fileSize, r.median)}`);
   }
 }
