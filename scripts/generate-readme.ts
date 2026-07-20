@@ -127,7 +127,11 @@ function getParserEntries(data: { results: BenchmarkResult[] }, semantic: boolea
   return entries;
 }
 
-async function generateChart(entries: ParserEntry[], chartName: string): Promise<string> {
+async function generateChart(
+  entries: ParserEntry[],
+  chartName: string,
+  fileSize: number,
+): Promise<string> {
   const data = entries.filter((e) => e.result != null);
   if (data.length === 0) return "";
 
@@ -200,11 +204,23 @@ async function generateChart(entries: ParserEntry[], chartName: string): Promise
             const bar = meta.data[i];
             const value = dataset.data[i] as number;
             ctx.save();
-            ctx.fillStyle = "#CAC1B0";
             ctx.font = `${9 * dpr}px sans-serif`;
-            ctx.textAlign = "left";
             ctx.textBaseline = "middle";
-            ctx.fillText(`${value.toFixed(2)}ms`, bar.x + 8 * dpr, bar.y);
+            ctx.fillStyle = "#CAC1B0";
+            ctx.textAlign = "left";
+            const msLabel = `${value.toFixed(2)}ms`;
+            ctx.fillText(msLabel, bar.x + 8 * dpr, bar.y);
+            const throughput = formatThroughput(fileSize, value / 1000);
+            const barWidth = bar.x - (bar as unknown as { base: number }).base;
+            if (barWidth >= ctx.measureText(throughput).width + 16 * dpr) {
+              ctx.font = `${8 * dpr}px sans-serif`;
+              ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+              ctx.textAlign = "right";
+              ctx.fillText(throughput, bar.x - 8 * dpr, bar.y);
+            } else {
+              const msWidth = ctx.measureText(msLabel).width;
+              ctx.fillText(`· ${throughput}`, bar.x + 8 * dpr + msWidth + 4 * dpr, bar.y);
+            }
             ctx.restore();
           }
         },
@@ -220,10 +236,10 @@ async function generateChart(entries: ParserEntry[], chartName: string): Promise
   return `charts/${chartName}.png`;
 }
 
-function generateTable(entries: ParserEntry[], fileSize: number): string {
+function generateTable(entries: ParserEntry[]): string {
   const lines = [
-    "| Parser | Median | Min | p99 | Throughput | Relative |",
-    "|--------|--------|-----|-----|------------|----------|",
+    "| Parser | Median | Min | p99 | Relative |",
+    "|--------|--------|-----|-----|----------|",
   ];
 
   const fastest = entries.reduce<number | null>(
@@ -233,12 +249,12 @@ function generateTable(entries: ParserEntry[], fileSize: number): string {
 
   for (const { name, result } of entries) {
     if (!result) {
-      lines.push(`| ${name} | Failed to parse | - | - | - | - |`);
+      lines.push(`| ${name} | Failed to parse | - | - | - |`);
       continue;
     }
     const relative = fastest ? `${(result.median / fastest).toFixed(2)}×` : "-";
     lines.push(
-      `| ${name} | ${formatTime(result.median)} | ${formatTime(result.min)} | ${formatTime(result.p99)} | ${formatThroughput(fileSize, result.median)} | ${relative} |`,
+      `| ${name} | ${formatTime(result.median)} | ${formatTime(result.min)} | ${formatTime(result.p99)} | ${relative} |`,
     );
   }
 
@@ -260,13 +276,13 @@ async function generateBenchmarksSection(): Promise<string> {
     lines.push(`**File size:** ${formatBytes(fileSize)}`);
     lines.push("");
 
-    const chartPath = await generateChart(entries, fileKey);
+    const chartPath = await generateChart(entries, fileKey, fileSize);
     if (chartPath) {
       lines.push(`![Bar chart comparing native parser speeds for ${fileName}](${chartPath})`);
       lines.push("");
     }
 
-    lines.push(generateTable(entries, fileSize));
+    lines.push(generateTable(entries));
     lines.push("");
   }
 
@@ -302,7 +318,7 @@ async function generateSemanticSection(): Promise<string> {
     lines.push(`### [${fileName}](${file.source_url})`);
     lines.push("");
 
-    const chartPath = await generateChart(entries, `${fileKey}_semantic`);
+    const chartPath = await generateChart(entries, `${fileKey}_semantic`, fileSize);
     if (chartPath) {
       lines.push(
         `![Bar chart comparing parser speeds with semantic analysis for ${fileName}](${chartPath})`,
@@ -310,7 +326,7 @@ async function generateSemanticSection(): Promise<string> {
       lines.push("");
     }
 
-    lines.push(generateTable(entries, fileSize));
+    lines.push(generateTable(entries));
     lines.push("");
   }
 
